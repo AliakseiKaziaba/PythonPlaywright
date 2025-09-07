@@ -21,17 +21,16 @@ class BasePage:
             self,
             test_id: str = None,
             css: str = None,
-            xpath: str = None
+            xpath: str = None,
+            **kwargs
     ):
+        if xpath:
+            return self.page.locator(f"xpath={xpath.format(**kwargs)}")
+        if css:
+            return self.page.locator(css.format(**kwargs))
         if test_id:
-            loc = self.page.get_by_test_id(test_id)
-        elif xpath:
-            loc = self.page.locator(f'xpath={xpath}')
-        elif css:
-            loc = self.page.locator(css)
-        else:
-            raise ValueError("You must specify at least one search method: test_id, css or xpath")
-        return loc
+            return self.page.get_by_test_id(test_id)
+        raise ValueError("Need one of xpath, css, test_id")
 
     @staticmethod
     def expect_visible(element_locator, timeout=default_timeout):
