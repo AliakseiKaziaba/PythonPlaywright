@@ -22,14 +22,15 @@ class BasePage:
             test_id: str = None,
             css: str = None,
             xpath: str = None,
+            nth: int = 0,
             **kwargs
     ):
         if xpath:
-            return self.page.locator(f"xpath={xpath.format(**kwargs)}")
+            return self.page.locator(f"xpath={xpath.format(**kwargs)}").nth(nth)
         if css:
-            return self.page.locator(css.format(**kwargs))
+            return self.page.locator(css.format(**kwargs)).nth(nth)
         if test_id:
-            return self.page.get_by_test_id(test_id)
+            return self.page.get_by_test_id(test_id).nth(nth)
         raise ValueError("Need one of xpath, css, test_id")
 
     @staticmethod
