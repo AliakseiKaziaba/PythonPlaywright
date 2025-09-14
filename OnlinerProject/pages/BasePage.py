@@ -17,7 +17,7 @@ class BasePage:
     def hover_on_element(self, locator):
         self.page.hover(locator)
 
-    def locator(
+    def get_locator(
             self,
             test_id: str = None,
             css: str = None,
